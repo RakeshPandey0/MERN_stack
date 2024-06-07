@@ -31,5 +31,5 @@ This is a [MERN stack](https://www.mongodb.com/mern-stack) application. MERN sta
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/RakeshPandey0/Mern_stack.git
-   cd Mern_stack
+   git clone https://github.com/RakeshPandey0/MERN_stack.git
+   cd MERN_stack
