@@ -1,0 +1,31 @@
+h1{
+    color: red;
+    border: 5px dotted cyan;
+    margin: 20px;
+}
+
+.btn{
+    color: white;
+    padding: 5px 10px;
+    margin: 10px;
+    border: 0;
+    border-radius: 12px;
+    font-size: 15px;
+}
+
+.btn-primary{
+    background-color: black;
+}
+
+
+.btn-secondary{
+    background-color: cyan;
+}
+
+.btn-danger{
+    background-color: red;
+}
+
+.btn-submit{
+    background-color: green;
+}

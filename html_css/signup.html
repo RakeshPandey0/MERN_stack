@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp</title>
+</head>
+<body>
+    <form method="get" action="index.html">
+        <label for="firstname">First Name</label>
+        <input type="text" name="firstname" id="fistname" placeholder="FirstName">
+        <br>
+        <label for="lastname">Last Name</label>
+        <input type="text" name="lastname" id="lastname" placeholder="LastName">
+        <br>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" placeholder="Email">
+        <br>
+        <label for="dob">Date of Birth</label>
+        <input type="date" name="firstname" id="dob" placeholder="DOB">
+        <br>
+
+        <label for="gender">Gender: </label>
+
+        <input type="radio" name="gender" id="Male" value="Male" required />
+        <label for="Male">Male</label>
+
+        <input type="radio" name="gender" id="Female" value="Female" required />
+        <label for="Female">Female</label>
+
+        <input type="radio" name="gender" id="Others" value="Others" required />
+        <label for="Others">Others</label>
+        <br>
+
+        <label for="country">Country</label>
+        <select name="country" id="country">
+            <option value="">Select Country</option>
+            <option value="Nepal">Nepal</option>
+            <option value="USA">USA</option>
+            <option value="India">India</option>
+        </select>
+        <br>
+        <label for="terms">I agree to terms and conditions</label>
+        <input type="checkbox" name="terms" id="terms">
+        <br>
+        <label for="about_you">Tell us about yourself</label>
+        <textarea name="about_you" id="about_you"></textarea>
+        <br>
+        <input type="submit" value="SignUp">
+    </form>
+</body>
+</html>
