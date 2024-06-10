@@ -106,3 +106,32 @@ console.log(isCheap?"Cheap":"Not Cheap");
 
 const isExpensive = products.every((product)=> product.price<200);
 console.log(isExpensive?"Everything cheap":"Not everything cheap");
+
+
+
+//Question
+const students = [
+    { name: 'Alice', score: 85, favFruit: 'apple' },
+    { name: 'Bob', score: 92, favFruit: 'apple'  },
+    { name: 'Charlie', score: 48, favFruit: 'orange' },
+    { name: 'David', score: 74,favFruit: 'pineapple' },
+    { name: 'Eve', score: 68, favFruit: 'orange' }
+];
+
+// needed output
+// {
+// 	apple: 2,
+// 	orange: 2,
+// 	pineapple: 1,
+// }
+
+let result = {}
+function countResult(obj){
+    let fruit=obj.favFruit;
+    if (!(fruit in result)){
+        result[fruit]=0;
+    }
+    result[fruit]++;
+}
+students.forEach(countResult);
+console.log(result);
