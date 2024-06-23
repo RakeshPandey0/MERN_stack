@@ -104,18 +104,24 @@ const fetchGitHubUserAndTemperatureWithPromises = (username) => {
 //Using async and await
 
 const fetchGitHubUserAndTemperatureWithPromises_2 = async (username) => {
-  const res = await fetch(`https://api.github.com/users/${username}`);
-  const githubRes = await res.json();
-  const name = githubRes.name;
-  const location = githubRes.location;
-  //fetching temperature from weather api
-  const res_2 = await fetch(
-    `https://api.weatherapi.com/v1/current.json?key=d17f02981bb5465b8ca23846241906&q=${location}`
-  );
-  const weatherRes = await res_2.json();
-  const temp_c = weatherRes.current.temp_c;
+  try {
+    const githubRes = await fetch(`https://api.github.com/users/${username}`);
+    const githubData = await githubRes.json();
+    const name = githubData.name;
+    const location = githubData.location;
+    //fetching temperature from weather api
+    const weatherRes = await fetch(
+      `https://api.weatherapi.com/v1/current.json?key=d17f02981bb5465b8ca23846241906&q=${location}`
+    );
+    const weatherData = await weatherRes.json();
+    const tempInCelcius = weatherData.current.temp_c;
 
-  console.log(`Name: ${name} \nLocation: ${location} \nTemperature: ${temp_c}`);
+    console.log(
+      `Name: ${name} \nLocation: ${location} \nTemperature: ${tempInCelcius}`
+    );
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 // fetchGitHubUserAndTemperatureWithPromises_2(username);
