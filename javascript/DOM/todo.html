@@ -6,14 +6,19 @@
     <title>TODO</title>
   </head>
   <body>
-    <form method="post">
+    <form method="post" id="first-form">
       <input type="text" name="task" id="task"
         placeholder="your new task"/>
-      <input type="submit" value="Add" />
+      <input type="submit" id="submit" value="Add" />
     </form>
-    <ul id="ul">
 
+    <form method="post" id="submit-form" >
+        <input type="text" name="search" id="search" placeholder="Search"/>
+        <input type="submit" value="Search">
+    </form>
+
+    <ul id="ul">
     </ul>
-    <script src="todo.js"></script>
+    <script src="todo_localStorage.js"></script>
   </body>
 </html>
