@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form method="post" id="submit-form" action="/add">
+
+        <input type="text" name="title" id="title" placeholder="Add" />
+        <input type="submit" value="Add">
+    </form>
+
+    <ul>
+    <% tasks.forEach((task) => { %>
+    <li>
+        <%= task.title %>
+        <form method="post" action="/delete/<%= task._id %>">
+            <button type="submit"> delete </button>
+        </form>
+
+        <form method="get" action="/edit/ <%= task._id %>">
+            <button type="submit"> edit </button>
+        </form>
+    </li>
+    <% }); %>
+</ul>
+</body>
+
+</html>
