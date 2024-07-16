@@ -18,7 +18,7 @@ const deleteTask = async (req, res) => {
 const editTask = async (req, res) => {
   const taskValue = await Task.findOne({ _id: req.params.id });
   res.send(`
-              <form method="post" id="submit-form" action="/edit/${taskValue._id}">
+              <form method="post" id="submit-form" action="/task/edit/${taskValue._id}">
               <input type="text" name="task" id="task" value="${taskValue.title}" placeholder="Search"/>
               <input type="submit" value="Update">
               </form>
