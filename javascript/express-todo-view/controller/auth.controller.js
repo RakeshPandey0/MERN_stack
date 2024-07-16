@@ -1,11 +1,13 @@
+const express = require("express");
 const User = require("../models/User");
 const bcryptjs = require("bcryptjs");
+const app = express();
 
-
+app.set("view engine", "ejs");
 
 const signInPage = (req, res) => res.render("sign-in", { message: null });
 
-const signIn = async (req, res) => {
+const signInPost = async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
   const { password, ...rest } = user;
   if (!user) {
@@ -17,7 +19,7 @@ const signIn = async (req, res) => {
     req.body.password,
     userHashedPassword
   );
-  if (passswordIsCorrect) res.redirect("/");
+  if (passswordIsCorrect) res.redirect("/task");
   else res.render("sign-in", { message: "Invalid Credentials" });
 };
 
@@ -29,7 +31,7 @@ const signUpPost = async (req, res) => {
   var salt = bcryptjs.genSaltSync(10);
   var hashedPassword = bcryptjs.hashSync(password, salt);
   User.create({ password: hashedPassword, ...rest });
-  res.redirect("/");
+  res.redirect("/task");
 };
 
-module.exports = { signInPage, signUpPage, signIn, signUpPost };
+module.exports = { signInPage, signUpPage, signInPost, signUpPost };

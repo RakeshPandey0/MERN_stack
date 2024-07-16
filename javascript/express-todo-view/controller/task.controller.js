@@ -7,12 +7,12 @@ const getTasks = async (req, res) => {
 
 const addTask = async (req, res) => {
   await Task.create({ title: req.body.title });
-  res.redirect("/");
+  res.redirect("/task");
 };
 
 const deleteTask = async (req, res) => {
   await Task.deleteOne({ _id: req.params.id });
-  res.redirect("/");
+  res.redirect("/task");
 };
 
 const editTask = async (req, res) => {
@@ -27,7 +27,7 @@ const editTask = async (req, res) => {
 
 const updateTask = async (req, res) => {
   await Task.updateOne({ _id: req.params.id }, { title: req.body.task });
-  res.redirect("/");
+  res.redirect("/task");
 };
 
 module.exports = { getTasks, addTask, deleteTask, editTask, updateTask };
