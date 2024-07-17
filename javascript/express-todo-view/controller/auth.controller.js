@@ -1,9 +1,5 @@
-const express = require("express");
 const User = require("../models/User");
 const bcryptjs = require("bcryptjs");
-const app = express();
-
-app.set("view engine", "ejs");
 
 const signInPage = (req, res) => res.render("sign-in", { message: null });
 
@@ -14,7 +10,7 @@ const signInPost = async (req, res) => {
     res.render("sign-in", { message: "Invalid Credentials" });
     return;
   }
-  const userHashedPassword = user.password;
+  const userHashedPassword = password;
   const passswordIsCorrect = bcryptjs.compareSync(
     req.body.password,
     userHashedPassword
@@ -23,7 +19,7 @@ const signInPost = async (req, res) => {
     req.session.user = user;
     res.redirect("/task");
   } else res.render("sign-in", { message: "Invalid Credentials" });
-}
+};
 
 const signUpPage = (req, res) => res.render("sign-up");
 
@@ -35,11 +31,11 @@ const signUpPost = async (req, res) => {
   res.redirect("/task");
 };
 
-const logOut = async (req, res)=>{
-  req.session.destroy(()=>{
+const logOut = async (req, res) => {
+  req.session.destroy(() => {
     res.clearCookie("connect.sid");
     res.redirect("/auth/sign-in");
-  })
-}
+  });
+};
 
 module.exports = { signInPage, signUpPage, signInPost, signUpPost, logOut };

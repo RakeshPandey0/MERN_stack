@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Edit</title>
+    </head>
+    <body>
+        <form method="post" id="submit-form"
+            action="/task/edit/<%= taskValue._id %>">
+            
+            <input type="text" name="task" id="task"
+                value="<%=taskValue.title%>"
+                placeholder="Search" />
+            <input type="submit" value="Update">
+        </form>
+    </body>
+</html>
