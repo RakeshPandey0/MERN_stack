@@ -8,6 +8,11 @@
 </head>
 
 <body>
+    <nav>
+        <form action="/auth/log-out" method="post">
+            <input type="submit" value="LogOut">
+        </form>
+    </nav>
     <form method="post" id="submit-form" action="/task/add">
 
         <input type="text" name="title" id="title" placeholder="Add" />
