@@ -28,7 +28,7 @@ const signUpPost = async (req, res) => {
   var salt = bcryptjs.genSaltSync(10);
   var hashedPassword = bcryptjs.hashSync(password, salt);
   User.create({ password: hashedPassword, ...rest });
-  res.redirect("/task");
+  res.redirect("/auth/sign-in");
 };
 
 const logOut = async (req, res) => {
