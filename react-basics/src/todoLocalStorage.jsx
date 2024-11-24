@@ -1,24 +1,22 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 
-const getTodoFromLocalStorage = ()=>{
+const getTodoFromLocalStorage = () => {
   const todo = localStorage.getItem("todos");
-  return JSON.parse(todo)?? [];
-}
+  return JSON.parse(todo) ?? [];
+};
 
-function Button({label, onClick}){
-  
-}
+function Button({ label, onClick }) {}
 
 function App() {
   let [indexToBeEdited, setIndexToBeEdited] = useState(null);
   let [newTodo, setNewTodo] = useState("");
   const [todos, setTodos] = useState(getTodoFromLocalStorage);
 
-  useEffect(()=>{
-    localStorage.setItem('todos',JSON.stringify(todos));
-  }, [todos])
-  
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (indexToBeEdited === null) {
@@ -45,16 +43,15 @@ function App() {
     <>
       <h1>TODO</h1>
       <form action="" onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={newTodo}
-        onChange={(e) => setNewTodo(e.target.value)}
-      />
-      <button type="submit">
-        {indexToBeEdited === null ? "Add" : "Update"}
-      </button>
+        <input
+          type="text"
+          value={newTodo}
+          onChange={(e) => setNewTodo(e.target.value)}
+        />
+        <button type="submit">
+          {indexToBeEdited === null ? "Add" : "Update"}
+        </button>
       </form>
-
 
       <ul>
         {todos.map((todo, index) => {

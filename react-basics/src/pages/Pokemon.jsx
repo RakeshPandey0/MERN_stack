@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
-import useQuery from "../hooks/useQuery"
+import { useQuery } from "../hooks/useQuery";
 
-function App() {
-  const {state, error, data} = useQuery("https://pokeapi.co/api/v2/pokemon")
+export function Pokemon() {
+  const { state, error, data } = useQuery("https://pokeapi.co/api/v2/pokemon");
 
   return (
     <>
@@ -19,8 +18,3 @@ function App() {
     </>
   );
 }
-
-export default App;
-
-
-//https://jsonplaceholder.typicode.com/posts
