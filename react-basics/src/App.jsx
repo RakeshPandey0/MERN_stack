@@ -1,6 +1,7 @@
 import { User } from "./pages/User";
 import { Pokemon } from "./pages/Pokemon";
 import { createContext, useContext, useState } from "react";
+import { Counter } from "./Counter";
 
 const UserContext = createContext(null);
 
@@ -11,10 +12,10 @@ function App() {
   const [user, setUser] = useState({name:"user", role:["admin"]})
   return (
     <>
-    {/* <Counter /> */}
     <UserContext.Provider value={user}>
-    <User />
-    <Pokemon />
+    {/* <User />
+    <Pokemon /> */}
+    <Counter />
     </UserContext.Provider>
     </>
   );
