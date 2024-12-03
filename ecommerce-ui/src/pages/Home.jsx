@@ -6,14 +6,14 @@ export default function SignIn() {
   return (
     <>
       <NavBar />
-      <img src="/Banner.jpg" width={"100%"} />
+      <img src="/Banner.jpg" width={"100%"} height={"500px"} style={{padding:"3px 0px 3px 0px"}} />
       <Typography variant="h4" textAlign={"center"} marginY={"2px"}>
         Featured Products
       </Typography>
 
       <Grid container spacing={3}>
         <Grid size={4}>
-          <ProductCard productName={"MSI LAPTOP"}/>
+          <ProductCard productName={"MSI LAPTOP"} description={"Laptop by MSI"}/>
         </Grid>
         <Grid size={4}>
           <ProductCard />

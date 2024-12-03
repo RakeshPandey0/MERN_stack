@@ -6,7 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-export default function ProductCard({productName}) {
+export default function ProductCard({productName, description}) {
   return (
     <Card sx={{border: "black"}}>
       <CardMedia
@@ -16,11 +16,10 @@ export default function ProductCard({productName}) {
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {productName??"Lizard"}
+          {productName??"Default Item"}
         </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+          {description??"This is default item"}
         </Typography>
       </CardContent>
       <CardActions>
