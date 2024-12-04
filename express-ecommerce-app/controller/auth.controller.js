@@ -47,6 +47,7 @@ const signIn = async (req, res) => {
     res.json({
       message: "Signedin succesfully.",
       token,
+      data: user,
     });
   } else {
     res.status(401).json({

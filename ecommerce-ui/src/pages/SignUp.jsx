@@ -23,7 +23,8 @@ const schema = yup
     // use regex for password validaton
 
     // Minimum eight characters, at least one uppercase letter, one lowercase letter and one number:
-    password: yup.string().matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, 'Invalid password' ).required(),
+    //.matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, 'Invalid password' )
+    password: yup.string().required(),
   })
   .required();
 
