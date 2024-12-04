@@ -1,7 +1,6 @@
 import Grid from "@mui/material/Grid2";
 import ProductCard from "../components/ProductCard";
 import { Typography } from "@mui/material";
-import Skeleton from "@mui/material/Skeleton";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import ProductSkeleton from "./ProductSkeleton";
@@ -33,7 +32,6 @@ export default function LatestProducts() {
             </Grid>
           ))
         )}
-        {}
       </Grid>
         </>
     )

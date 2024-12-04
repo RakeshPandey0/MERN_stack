@@ -1,30 +1,31 @@
-import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import * as React from "react";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
-export default function ProductCard({productName, description}) {
+export default function ProductCard({ product }) {
+  const { image, name, description, price } = product;
   return (
-    <Card sx={{border: "black"}}>
+    <Card>
       <CardMedia
-        sx={{ height: 160}}
-        image="/static/images/cards/contemplative-reptile.jpg"
+        sx={{ height: 200 }}
+        image={`http://localhost:3000/${image}`}
         title="green iguana"
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {productName??"Default Item"}
+          {name} {price} $
         </Typography>
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          {description??"This is default item"}
+        <Typography variant="body2" sx={{ color: "text.secondary" }}>
+          {description}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+        <Button size="small">Add To Cart</Button>
+        <Button size="small">Wish List</Button>
       </CardActions>
     </Card>
   );

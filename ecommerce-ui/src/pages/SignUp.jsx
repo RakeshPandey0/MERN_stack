@@ -1,4 +1,3 @@
-import React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import FormLabel from "@mui/material/FormLabel";
@@ -9,7 +8,53 @@ import Stack from "@mui/material/Stack";
 import Card from "@mui/material/Card";
 import Alert from "@mui/material/Alert";
 import { Link } from "react-router";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { useNavigate } from "react-router";
+
+const schema = yup
+  .object({
+    name: yup.string().required(),
+    username: yup.string().required(),
+    email: yup.string().email().required(),
+    // use regex for password validaton
+
+    // Minimum eight characters, at least one uppercase letter, one lowercase letter and one number:
+    password: yup.string().matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, 'Invalid password' ).required(),
+  })
+  .required();
+
+const signUp = async (data) => {
+  const res = await axios.post("http://localhost:3000/api/auth/sign-up", data);
+  return res.data;
+};
+
 export default function SignUp() {
+  const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const mutation = useMutation({
+    mutationFn: signUp,
+    onSuccess: () => {
+      navigate("/sign-in");
+    },
+  });
+
+  const onSubmit = (data) => {
+    mutation.mutate(data);
+  };
+
+  // <input type="email" name="email" onChange={handleChange} />
   return (
     <Stack
       sx={{ width: "80%", mx: "auto" }}
@@ -24,9 +69,12 @@ export default function SignUp() {
         >
           Sign Up
         </Typography>
-        <Alert sx={{ my: 2 }} severity="error">
-          Example error message
-        </Alert>
+        {mutation.error && (
+          <Alert sx={{ my: 2 }} severity="error">
+            {mutation.error.response.data.message}
+          </Alert>
+        )}
+
         <Box
           component="form"
           noValidate
@@ -36,6 +84,7 @@ export default function SignUp() {
             width: "100%",
             gap: 2,
           }}
+          onSubmit={handleSubmit(onSubmit)}
         >
           <FormControl>
             <FormLabel htmlFor="name">Name</FormLabel>
@@ -48,8 +97,24 @@ export default function SignUp() {
               autoFocus
               fullWidth
               variant="outlined"
-              error={true}
-              helperText="Name is required"
+              error={Boolean(errors.name)}
+              helperText={errors.name?.message}
+              {...register("name")}
+            />
+          </FormControl>
+          <FormControl>
+            <FormLabel htmlFor="username">Username</FormLabel>
+            <TextField
+              id="username"
+              type="name"
+              placeholder="Your name"
+              autoComplete="username"
+              autoFocus
+              fullWidth
+              variant="outlined"
+              error={Boolean(errors.username)}
+              helperText={errors.username?.message}
+              {...register("username")}
             />
           </FormControl>
           <FormControl>
@@ -62,8 +127,9 @@ export default function SignUp() {
               autoComplete="email"
               fullWidth
               variant="outlined"
-              error={true}
-              helperText="Please enter a valid email address"
+              error={Boolean(errors.email)}
+              helperText={errors.email?.message}
+              {...register("email")}
             />
           </FormControl>
           <FormControl>
@@ -78,16 +144,16 @@ export default function SignUp() {
               autoComplete="current-password"
               fullWidth
               variant="outlined"
-              error={true}
-              helperText="Password must meet complexity requirements"
+              error={Boolean(errors.password)}
+              helperText={errors.password?.message}
+              {...register("password")}
             />
           </FormControl>
-          <Button type="button" fullWidth variant="contained">
+          <Button type="submit" fullWidth variant="contained">
             Sign Up
           </Button>
           <Typography sx={{ textAlign: "center" }}>
-            Already have an account?{" "}
-            <Link to={"/sign-in"}>Sign In</Link>
+            Already have an account? <Link to="/sign-in">Sign In</Link>
           </Typography>
         </Box>
       </Card>
