@@ -3,40 +3,54 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
-import { createContext, useContext, useEffect, useState } from "react";
-
+import Products from "./pages/Products";
+import { AdminRoutes } from "./layouts/AdminRoute";
+import { GuestRoutes } from "./layouts/GuestRoute";
+import { HomeLayout } from "./layouts/HomeLayout";
+import { ProtectedRoutes } from "./layouts/ProtectedRoute";
+import { AuthProvider } from "./providers/AuthProvider";
 const queryClient = new QueryClient();
-const authUserContext = createContext();
-
-export const useAuthUser = () => {
-  return useContext(authUserContext);
-};
-
-const getauthUserFromLocalStorage = () => {
-  const authUser = localStorage.getItem("authUser");
-  return JSON.parse(authUser) ?? [];
-};
 
 function App() {
-  const [authUser, setAuthUser] = useState(getauthUserFromLocalStorage);
-
-  useEffect(() => {
-    localStorage.setItem("authUser", JSON.stringify(authUser));
-  }, [authUser]);
-
   return (
-    <authUserContext.Provider value={{ authUser, setAuthUser }}>
+    <AuthProvider>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/sign-in" element={<SignIn />} />
-            <Route path="/sign-up" element={<SignUp />} />
+            <Route element={<HomeLayout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/products" element={<Products />} />
+              <Route element={<ProtectedRoutes />}>
+                <Route path="/orders" element={<h2>orders page</h2>} />
+                <Route path="/cart" element={<h2>cart page</h2>} />
+              </Route>
+              <Route element={<AdminRoutes />}>
+                <Route
+                  path="/dashboard"
+                  element={<h2>This is Dashboard page</h2>}
+                />
+                <Route
+                  path="/dashboard/users"
+                  element={<h2>This is Dashboard users page</h2>}
+                />
+                <Route
+                  path="/dashboard/products"
+                  element={<h2>This is Dashboard products page</h2>}
+                />
+              </Route>
+            </Route>
+            <Route element={<GuestRoutes />}>
+              <Route path="/sign-in" element={<SignIn />} />
+              <Route path="/sign-up" element={<SignUp />} />
+            </Route>
           </Routes>
         </BrowserRouter>
       </QueryClientProvider>
-    </authUserContext.Provider>
+    </AuthProvider>
   );
 }
 
 export default App;
+
+// products pagination, filtering, search, api pagination
+// sign in sign up if authenticate redirect /
