@@ -44,6 +44,16 @@ const signIn = async (req, res) => {
       "secret",
       { expiresIn: "10d" }
     );
+
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + 10);
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      expires: expiresAt,
+      secure: true,
+    });
+
     res.json({
       message: "Signedin succesfully.",
       token,
@@ -54,13 +64,6 @@ const signIn = async (req, res) => {
       message: "Invalid credentials",
     });
   }
-};
-
-const logOut = async (req, res) => {
-  req.session.destroy(() => {
-    res.clearCookie("connect.sid");
-    res.redirect("/auth/sign-in");
-  });
 };
 
 module.exports = {

@@ -14,7 +14,7 @@ import * as yup from "yup";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import {useAuthUser} from "../providers/AuthProvider"
+import { useAuthUser } from "../providers/AuthProvider";
 
 const schema = yup
   .object({
@@ -25,7 +25,7 @@ const schema = yup
   .required();
 
 const signIn = async (data) => {
-  const res = await axios.post("http://localhost:3000/api/auth/sign-in", data);
+  const res = await axios.post("/api/auth/sign-in", data);
   return res.data;
 };
 

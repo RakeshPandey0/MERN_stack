@@ -7,46 +7,76 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Card from "@mui/material/Card";
 import Alert from "@mui/material/Alert";
-import { Link } from "react-router";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import { toast } from "react-toastify";
 
 const schema = yup
   .object({
     name: yup.string().required(),
-    username: yup.string().required(),
-    email: yup.string().email().required(),
-    // use regex for password validaton
-    password: yup.string().required(),
+    price: yup.number().required(),
+    featured: yup.boolean(),
   })
   .required();
 
-const signUp = async (data) => {
-  const res = await axios.post("http://localhost:3000/api/auth/sign-up", data);
+const addProduct = async (data) => {
+  const formData = new FormData();
+  formData.append("name", data.name);
+  formData.append("price", data.price);
+  formData.append("featured", data.featured);
+  console.log(data.image);
+  formData.append("image", data.image[0]);
+  const res = await axios.post("/api/product", formData);
   return res.data;
 };
 
-export default function SignUp() {
+const getProduct = async (productId) => {
+  const res = await axios.get(`/api/product/${productId}`);
+  return res.data.data;
+};
+
+export default function ProductForm() {
   const navigate = useNavigate();
+  const { productId } = useParams();
+
+  const action = productId ? "Edit" : "Add";
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   const mutation = useMutation({
-    mutationFn: signUp,
-    onSuccess: () => {
-      navigate("/sign-in");
+    mutationFn: addProduct,
+    onSuccess: (res) => {
+      navigate("/dashboard/products");
+      toast(res.message, {
+        type: "success",
+      });
     },
   });
+
+  const query = useQuery({
+    queryKey: ["products", productId],
+    queryFn: () => getProduct(productId),
+    enabled: Boolean(productId),
+  });
+
+  if (productId && query.isSuccess) {
+    setValue("name", query.data.name);
+    setValue("price", query.data.price);
+    setValue("featured", query.data.featured);
+  }
 
   const onSubmit = (data) => {
     mutation.mutate(data);
@@ -65,7 +95,7 @@ export default function SignUp() {
           variant="h4"
           sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)" }}
         >
-          Sign Up
+          {action} Product
         </Typography>
         {mutation.error && (
           <Alert sx={{ my: 2 }} severity="error">
@@ -88,11 +118,9 @@ export default function SignUp() {
             <FormLabel htmlFor="name">Name</FormLabel>
             <TextField
               id="name"
-              type="name"
+              type="text"
               name="name"
-              placeholder="Your name"
               autoComplete="name"
-              autoFocus
               fullWidth
               variant="outlined"
               error={Boolean(errors.name)}
@@ -101,58 +129,31 @@ export default function SignUp() {
             />
           </FormControl>
           <FormControl>
-            <FormLabel htmlFor="username">Username</FormLabel>
-            <TextField
-              id="username"
-              type="name"
-              placeholder="Your name"
-              autoComplete="username"
-              autoFocus
-              fullWidth
-              variant="outlined"
-              error={Boolean(errors.username)}
-              helperText={errors.username?.message}
-              {...register("username")}
-            />
+            <FormLabel htmlFor="image">Image</FormLabel>
+            <input type="file" id="image" {...register("image")} />
           </FormControl>
           <FormControl>
-            <FormLabel htmlFor="email">Email</FormLabel>
+            <FormLabel htmlFor="price">Price</FormLabel>
             <TextField
-              id="email"
-              type="email"
-              name="email"
-              placeholder="your@email.com"
-              autoComplete="email"
+              id="price"
+              type="number"
+              price="price"
+              autoComplete="price"
               fullWidth
               variant="outlined"
-              error={Boolean(errors.email)}
-              helperText={errors.email?.message}
-              {...register("email")}
+              error={Boolean(errors.price)}
+              helperText={errors.price?.message}
+              {...register("price")}
             />
           </FormControl>
-          <FormControl>
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <FormLabel htmlFor="password">Password</FormLabel>
-            </Box>
-            <TextField
-              name="password"
-              placeholder="••••••"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              fullWidth
-              variant="outlined"
-              error={Boolean(errors.password)}
-              helperText={errors.password?.message}
-              {...register("password")}
-            />
-          </FormControl>
+          <FormControlLabel
+            control={<Checkbox {...register("featured")} />}
+            label="Featured"
+          />
+
           <Button type="submit" fullWidth variant="contained">
-            Sign Up
+            {action} Product
           </Button>
-          <Typography sx={{ textAlign: "center" }}>
-            Already have an account? <Link to="/sign-in">Sign In</Link>
-          </Typography>
         </Box>
       </Card>
     </Stack>
