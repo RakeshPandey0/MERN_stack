@@ -9,13 +9,13 @@ export function UseUser(){
   return useContext(UserContext);
 }
 function App() {
-  const [user, setUser] = useState({name:"user", role:["admin"]})
+  const [user, setUser] = useState({name:"user", role:["customer", "admin"]})
   return (
     <>
     <UserContext.Provider value={user}>
-    {/* <User />
-    <Pokemon /> */}
-    <Counter />
+    <User />
+    <Pokemon />
+    {/* <Counter /> */}
     </UserContext.Provider>
     </>
   );

@@ -1,6 +1,6 @@
 import Skeleton from "@mui/material/Skeleton";
 import Grid from "@mui/material/Grid2";
-export default function ProductSkeleton(){
+export function ProductSkeleton(){
     return(
         <>
             <Grid size={{ md: 3 }}>

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { ProductsSkeleton } from "../components/ProductsSkeleton";
+import { ProductSkeleton } from "../components/ProductSkeleton";
 import ProductCard from "../components/ProductCard";
 import Grid from "@mui/material/Grid2";
 import TablePagination from "@mui/material/TablePagination";
@@ -12,7 +12,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
 const getProducts = async (limit, page, order) => {
-  const res = await axios.get("/api/product", {
+  const res = await axios.get("http://localhost:3000/api/product", {
     params: {
       limit,
       page,
@@ -67,10 +67,10 @@ export default function Products() {
       <Grid container spacing={2}>
         {isLoading ? (
           <>
-            <ProductsSkeleton />
+            <ProductSkeleton />
           </>
         ) : (
-          data.data.map((product) => (
+          data?.data?.map((product) => (
             <Grid key={product._id} size={{ md: 3, sm: 6 }}>
               <ProductCard product={product} />
             </Grid>
